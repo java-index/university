@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE log4j:configuration PUBLIC
+  "-//APACHE//DTD LOG4J 1.2//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+
+<log4j:configuration debug="false" xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+	<appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.EnhancedPatternLayout">
+			<param name="ConversionPattern" value="%d{ISO8601} [%-5p] [%t] %c{-2} %m %throwable{}%n" />
+		</layout>
+	</appender>
+
+	<appender name="application" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="university.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.EnhancedPatternLayout">
+			<param name="ConversionPattern"	value="%d{ISO8601} [%-5p] [%t] %35c{-2} [%m] %throwable{}%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="TRACE" />
+			<param name="LevelMax" value="WARN" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+	
+	<appender name="application-error" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="university-error.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.EnhancedPatternLayout">
+			<param name="ConversionPattern"	value="%d{ISO8601} [%-5p] [%t] %20c{-2} %m %throwable{}%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="ERROR" />
+			<param name="LevelMax" value="FATAL" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+	
+	<appender name="dao" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="dao.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.EnhancedPatternLayout">
+			<param name="ConversionPattern" value="%d{ISO8601} [%-5p] [%t] %30c{-2} %m %throwable{}%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="TRACE" />
+			<param name="LevelMax" value="WARN" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+
+	<appender name="dao-error" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="dao-error.log" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
+		<param name="Encoding" value="UTF-8" />
+		<layout class="org.apache.log4j.EnhancedPatternLayout">
+			<param name="ConversionPattern" value="%d{ISO8601} [%-5p] [%t] %20c{-2} %m %throwable{6}%n" />
+		</layout>
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="ERROR" />
+			<param name="LevelMax" value="FATAL" />
+			<param name="AcceptOnMatch" value="true" />
+		</filter>
+	</appender>
+
+	<logger name="com.smarterama.university">
+		<level value="INFO" />
+		<appender-ref ref="ConsoleAppender"/>
+		<appender-ref ref="application" />
+		<appender-ref ref="application-error" />
+	</logger>
+
+	<logger name="com.smarterama.university.dao" additivity="false" >
+		<level value="INFO" />
+		<appender-ref ref="dao" />
+		<appender-ref ref="dao-error" />
+	</logger>
+
+	<root>
+		<priority value="ERROR" />
+	</root>
+
+</log4j:configuration>
