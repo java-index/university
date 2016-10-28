@@ -10,8 +10,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 import com.smarterama.university.domain.Model;
+import com.smarterama.university.ui.CustomDateSerializer;
 import com.smarterama.university.ui.validation.Phone;
 
 public abstract class Person extends Model {
@@ -52,7 +52,7 @@ public abstract class Person extends Model {
 		this.lastName = lastName;
 	}
 
-	@JsonSerialize(using=DateSerializer.class)
+	@JsonSerialize(using = CustomDateSerializer.class)
 	@NotNull(message = "{validation.notempty.message}")
 	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	@Past(message = "{validation.past.message}")
