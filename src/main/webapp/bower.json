@@ -1,0 +1,14 @@
+{
+  "name": "universitapp",
+  "homepage": "https://github.com/java-index/university",
+  "authors": [
+    "Roman <boke@ukr.net>"
+  ],
+  "description": "",
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  }
+}

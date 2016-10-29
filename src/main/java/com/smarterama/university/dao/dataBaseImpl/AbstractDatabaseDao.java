@@ -122,17 +122,19 @@ public abstract class AbstractDatabaseDao<T extends Model> implements GenericDao
 	}
 	
 	@Override
-	public void delete(long id) throws DaoException {
+	public long delete(long id) throws DaoException {
 		final String querySql = "DELETE FROM " + tableName() + " WHERE id = ?";
 		final String logMessage = "delete from " + tableName() + ", ID = " + id;
 
 		Connection connection = null;
 		PreparedStatement statement = null;
+		long resultQuery = 0;
+		
 		try{
 			connection = ConnectionFactory.getConnection();
 			statement = connection.prepareStatement(querySql);
 			statement.setLong(1, id);
-			statement.executeUpdate();
+			resultQuery = statement.executeUpdate();
 		} catch (SQLException e){
 			getLogger().error(logMessage, e);
 			throw new DaoException(e);
@@ -140,6 +142,7 @@ public abstract class AbstractDatabaseDao<T extends Model> implements GenericDao
 			close(statement, connection);
 		}
 		getLogger().debug(logMessage);
+		return resultQuery == 0.0 ? 0 : id;
 	}
 	
 	protected List<T> searchByCriteria(SearchCriteria criteria) throws DaoException {

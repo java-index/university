@@ -31,7 +31,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.smarterama.university.domain.University;
 import com.smarterama.university.domain.personal.Student;
 
-@RequestMapping("/students")
+@RequestMapping("/students-old")
 @Controller
 public class StudentController {
 

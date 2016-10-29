@@ -283,28 +283,28 @@ public class University {
 
 	/* delete */
 
-	public void deleteStudent(long idStudent) throws DomainException {
-		delete(idStudent, studentDao);
+	public long deleteStudent(long idStudent) throws DomainException {
+		return delete(idStudent, studentDao);
 	}
 
-	public void deleteTeacher(long idTeacher) throws DomainException {
-		delete(idTeacher, teacherDao);
+	public long deleteTeacher(long idTeacher) throws DomainException {
+		return delete(idTeacher, teacherDao);
 	}
 
-	public void deleteGroup(long idGroup) throws DomainException {
-		delete(idGroup, groupDao);
+	public long deleteGroup(long idGroup) throws DomainException {
+		return delete(idGroup, groupDao);
 	}
 
-	public void deleteRoom(long idRoom) throws DomainException {
-		delete(idRoom, roomDao);
+	public long deleteRoom(long idRoom) throws DomainException {
+		return delete(idRoom, roomDao);
 	}
 
-	public void deleteDiscipline(long idDiscipline) throws DomainException {
-		delete(idDiscipline, disciplineDao);
+	public long deleteDiscipline(long idDiscipline) throws DomainException {
+		return delete(idDiscipline, disciplineDao);
 	}
 
-	public void deleteLesson(long idLesson) throws DomainException {
-		delete(idLesson, lessonDao);
+	public long deleteLesson(long idLesson) throws DomainException {
+		return delete(idLesson, lessonDao);
 	}
 
 	/* private */
@@ -392,11 +392,11 @@ public class University {
 		}
 	}
 
-	private <T extends Model, E extends GenericDao<T>> void delete(long id, E dao) throws DomainException {
+	private <T extends Model, E extends GenericDao<T>> long delete(long id, E dao) throws DomainException {
 		final String message = "delete object ID = " + id  + " from " + dao.tableName();
 		try {
 			LOG.info(message);
-			dao.delete(id);
+			return dao.delete(id);
 		} catch (DaoException e) {
 			LOG.error(message, e);
 			throw new DomainException(e);

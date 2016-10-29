@@ -15,7 +15,7 @@ public interface GenericDao<T extends Model> {
 	
 	void update(T object) throws DaoException;
 
-	void delete(long id) throws DaoException;
+	long delete(long id) throws DaoException;
 	
 	String tableName();
 }

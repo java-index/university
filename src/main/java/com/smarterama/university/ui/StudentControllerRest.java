@@ -12,8 +12,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -28,10 +32,10 @@ public class StudentControllerRest {
 
 	private University universityService;
 
-	private MessageSource messageSource;
+	//private MessageSource messageSource;
 
-	// view students list
-	@GetMapping("/students-rest")
+	// view all students
+	@GetMapping("/students")
 	public List<Student> list(Model model) {
 		LOG.info("Listing students...");
 		List<Student> students = universityService.getAllStudent();
@@ -39,13 +43,41 @@ public class StudentControllerRest {
 		return students;
 	}
 
-	// student view
-	@GetMapping(value = "/students-rest/{id}")
+	// view
+	@GetMapping(value = "/students/{id}")
 	public ResponseEntity show(@PathVariable("id") long id, Model model) {
 		Student student = universityService.getStudentById(id);
 		if (student == null) {
+			return new ResponseEntity ("No Customer found for ID " + id, HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity (student, HttpStatus.OK);
+	}
+	
+	// create
+	@PostMapping(value = "/students")
+	public ResponseEntity createStudent(@RequestBody Student student) {
+		universityService.addStudent(student);
+		return new ResponseEntity(student, HttpStatus.OK);
+	}
+	
+	// delete
+	@DeleteMapping("/students/{id}")
+	public ResponseEntity deleteStudent(@PathVariable long id) {
+		if (0.0 == universityService.deleteStudent(id)) {
 			return new ResponseEntity("No Customer found for ID " + id, HttpStatus.NOT_FOUND);
 		}
+		return new ResponseEntity(id, HttpStatus.OK);
+	}
+	
+	@PutMapping("/students/{id}")
+	public ResponseEntity updateStudents(@PathVariable long id, @RequestBody Student student) {
+
+		universityService.updateStudent(student);
+
+		if (null == student) {
+			return new ResponseEntity("No Customer found for ID " + id, HttpStatus.NOT_FOUND);
+		}
+
 		return new ResponseEntity(student, HttpStatus.OK);
 	}
 
